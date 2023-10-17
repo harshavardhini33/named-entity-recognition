@@ -50,7 +50,7 @@ from keras.models import Model
 
 
 ### Reading, Pre-processing Data:
-python
+
 data = pd.read_csv("ner_dataset.csv", encoding="latin1")
 data.head(35)
 data = data.fillna(method="ffill")
@@ -70,7 +70,7 @@ num_words
 num_tags
 
 ### Defining a Class to get sentence:
-python
+
 class SentenceGetter(object):
     def __init__(self, data):
         self.n_sent = 1
@@ -109,7 +109,7 @@ max_len = 50
 
 
 ### Padding:
-python
+
 X = sequence.pad_sequences(maxlen=max_len,
                   sequences=X1, padding="post",
                   value=num_words-1)
@@ -126,7 +126,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y,
 
 
 ### LSTM Model:
-python
+
 input_word = layers.Input(shape=(max_len,))
 embedding_layer = layers.Embedding(input_dim = num_words,
                                    output_dim = 50,
@@ -152,7 +152,7 @@ history = model.fit(
     epochs=3,)
 
 ### Metrics:
-python
+
 metrics = pd.DataFrame(model.history.history)
 metrics.head()
 
@@ -161,7 +161,7 @@ metrics[['accuracy','val_accuracy']].plot()
 metrics[['loss','val_loss']].plot()
 
 ### Prediction:
-python
+
 i = 20
 p = model.predict(np.array([X_test[i]]))
 p = np.argmax(p, axis=-1)
